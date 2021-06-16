@@ -4,8 +4,6 @@ public class Board extends GameObject{
 
 	private int[][] field = new int[8][2];
 	
-
-	
 	private int x,y;
 	private int selX, selY;
 	private int nextX, nextY;
@@ -18,6 +16,7 @@ public class Board extends GameObject{
 			}
 		}
 	}
+
 	
 	public int getX() {
 		return x;
