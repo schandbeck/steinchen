@@ -1,0 +1,96 @@
+package com.husostein.main;
+
+public class Move {
+	
+	private Board board;
+	
+	int field[][] = board.getField();
+	int direction=0;
+	
+	
+	public boolean makeMove() {
+		
+		boolean moving=true;
+		boolean moved=false;
+		
+		if (checkMove()) {
+			
+			board.setNextX(board.getSelX());
+			board.setNextY(board.getSelY());
+			
+			field[board.getX()][board.getY()]=0;
+			
+			while(moving) {
+				
+				if(board.getX()<board.getNextX()) direction=1;
+				if(board.getX()<board.getNextX()) direction=-1;
+				if(board.getX()==board.getNextX() && board.getY()<board.getNextY()) direction=-1;
+				if(board.getX()==board.getNextX() && board.getY()>board.getNextY()) direction=1;
+				
+				for(int i=1; i<=field[board.getX()][board.getY()]; i++) {
+					
+					if(board.getNextX() == -1 && board.getNextY() == 0) {
+						board.setNextX(0);
+						board.setNextY(1);
+						direction=1;
+					}
+					
+					if(board.getNextX() == -1 && board.getNextY() == 1) {
+						board.setNextX(0);
+						board.setNextY(0);
+						direction=1;
+					}
+					
+					if(board.getNextX() == 8 && board.getNextY() == 0) {
+						board.setNextX(7);
+						board.setNextY(1);
+						direction=-1;
+					}
+					
+					if(board.getNextX() == 8 && board.getNextY() == 1) {
+						board.setNextX(7);
+						board.setNextY(0);
+						direction=-1;
+					}
+					
+					field[board.getNextX()][board.getNextY()]++;
+					board.setNextX(board.getNextX()+(1*direction));
+					
+				}
+				
+				moving=false;
+				
+			}
+			moved=true;
+		}
+		
+		else {
+			System.out.println("Impossible Move");
+			moved=false;
+		}
+		
+		return moved;
+	}
+	
+	public boolean checkMove() {
+		
+		boolean possible=false;
+		
+		if(field[board.getX()][board.getY()] >= 2) {
+			
+			if(board.getSelX()==board.getX()+1 || board.getSelX()==board.getX()-1) {
+			
+				possible=true;
+			}
+			
+			else if((board.getX() == board.getSelX()) && (board.getY() == board.getSelY()+1 && board.getY()==0) || (board.getY() == board.getSelY()-1 && board.getY()==1)) {
+				
+				possible=true;
+			}
+		}
+		
+		return possible;
+	}
+	
+	
+}

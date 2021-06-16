@@ -1,0 +1,101 @@
+package com.husostein.main;
+
+import java.awt.Canvas;
+import java.io.*;
+
+public class Game extends Canvas implements Runnable{
+
+	private static final long serialVersionUID = 5636395465752308991L;
+	
+	private Board board;
+	private Move move;
+
+	public Game() throws IOException{
+		
+		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+		String input;
+		
+		boolean selected=false;
+		
+		board = new Board(this);
+		
+		drawBoard(board);
+		
+		while(selected==false) {
+		
+			System.out.print("Select Field[x] you want to move: ");
+			input=keyboard.readLine();
+			board.setX(Integer.parseInt(input));
+		
+			if(board.getX()>=0 && board.getX()<=7) {
+			selected=true;
+			}
+		} 
+		
+		selected=false;
+		
+		while(selected==false) {
+		
+			System.out.print("Select Field[y] you want to move: ");
+			input=keyboard.readLine();
+			board.setY(Integer.parseInt(input));
+			
+			if(board.getX()>=0 && board.getY()<=1) {
+				selected=true;
+			}
+		}
+		
+		selected=false;
+		
+		while(selected==false) {
+			
+			System.out.print("Select Field[x] you want to move to: ");
+			input=keyboard.readLine();
+			board.setSelX(Integer.parseInt(input));
+		
+			if(board.getSelX()>=0 && board.getSelX()<=7) {
+			selected=true;
+			}
+		}
+		
+		selected=false;
+		
+		while(selected==false) {
+			
+			System.out.print("Select Field[y] you want to move to: ");
+			input=keyboard.readLine();
+			board.setSelY(Integer.parseInt(input));
+		
+			if(board.getSelY()>=0 && board.getSelY()<=1) {
+			selected=true;
+			}
+		}
+		
+		move.checkMove();
+	}
+	
+	public void drawBoard(Board board) {
+		
+		int[][] field = new int[8][2];
+		field=board.getField();
+		
+		System.out.println("");
+		for(int y=1; y>=0; y--) {
+			for(int x=0; x<8; x++) {
+				System.out.print(field[x][y]);
+			}
+			System.out.println("");
+		}
+		System.out.println("");
+		
+	}
+	
+	public void run() {
+		
+	}
+	
+	public static void main(String[] args) throws IOException{
+		
+		new Game();
+	}
+}

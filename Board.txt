@@ -1,0 +1,77 @@
+package com.husostein.main;
+
+public class Board extends GameObject{
+
+	private int[][] field = new int[8][2];
+	
+
+	
+	private int x,y;
+	private int selX, selY;
+	private int nextX, nextY;
+	
+	public Board(Game game) {
+	
+		for(int x=0; x<8; x++) {
+			for(int y=0; y<2; y++) {
+				field[x][y]=2;
+			}
+		}
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getSelX() {
+		return selX;
+	}
+
+	public void setSelX(int selX) {
+		this.selX = selX;
+	}
+
+	public int getSelY() {
+		return selY;
+	}
+
+	public void setSelY(int selY) {
+		this.selY = selY;
+	}
+
+	public int getNextX() {
+		return nextX;
+	}
+
+	public void setNextX(int nextX) {
+		this.nextX = nextX;
+	}
+
+	public int getNextY() {
+		return nextY;
+	}
+
+	public void setNextY(int nextY) {
+		this.nextY = nextY;
+	}
+	
+	public int[][] getField() {
+		return field;
+	}
+
+	public void setField(int[][] field) {
+		this.field = field;
+	}
+}
