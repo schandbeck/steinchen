@@ -4,30 +4,41 @@ public class Move {
 	
 	private Board board;
 	
-	int field[][] = board.getField();
+	int field[][] = new int[8][2];
 	int direction=0;
 	
+	public Move(Board board) {
+		
+		this.board=board;
+		field=board.getField();
+	}
 	
-	public boolean makeMove() {
+	public void makeMove() {
 		
 		boolean moving=true;
-		boolean moved=false;
 		
-		if (checkMove()) {
+		int moves=0;
+		
+		if (checkMove()==true) {
 			
 			board.setNextX(board.getSelX());
 			board.setNextY(board.getSelY());
 			
+			moves=field[board.getX()][board.getY()];
+			
 			field[board.getX()][board.getY()]=0;
 			
-			while(moving) {
+			while(moving==true) {
 				
 				if(board.getX()<board.getNextX()) direction=1;
-				if(board.getX()<board.getNextX()) direction=-1;
+				if(board.getX()>board.getNextX()) direction=-1;
 				if(board.getX()==board.getNextX() && board.getY()<board.getNextY()) direction=-1;
 				if(board.getX()==board.getNextX() && board.getY()>board.getNextY()) direction=1;
 				
-				for(int i=1; i<=field[board.getX()][board.getY()]; i++) {
+				for(int i=0; i<moves; i++) {
+					
+					System.out.print(board.getNextX());
+					System.out.println(board.getNextY());
 					
 					if(board.getNextX() == -1 && board.getNextY() == 0) {
 						board.setNextX(0);
@@ -36,14 +47,14 @@ public class Move {
 					}
 					
 					if(board.getNextX() == -1 && board.getNextY() == 1) {
-						board.setNextX(0);
-						board.setNextY(0);
+						board.setNextX(1);
+						board.setNextY(1);
 						direction=1;
 					}
 					
 					if(board.getNextX() == 8 && board.getNextY() == 0) {
-						board.setNextX(7);
-						board.setNextY(1);
+						board.setNextX(6);
+						board.setNextY(0);
 						direction=-1;
 					}
 					
@@ -53,23 +64,23 @@ public class Move {
 						direction=-1;
 					}
 					
+					System.out.print(board.getNextX());
+					System.out.println(board.getNextY());
+					
 					field[board.getNextX()][board.getNextY()]++;
 					board.setNextX(board.getNextX()+(1*direction));
-					
 				}
 				
 				moving=false;
 				
 			}
-			moved=true;
 		}
 		
 		else {
 			System.out.println("Impossible Move");
-			moved=false;
 		}
 		
-		return moved;
+		return;
 	}
 	
 	public boolean checkMove() {
@@ -83,12 +94,13 @@ public class Move {
 				possible=true;
 			}
 			
-			else if((board.getX() == board.getSelX()) && (board.getY() == board.getSelY()+1 && board.getY()==0) || (board.getY() == board.getSelY()-1 && board.getY()==1)) {
+			if((board.getX() == board.getSelX()) && (board.getY()==0 && board.getSelY() > board.getY()) || (board.getY()==1 && board.getSelY() < board.getY())) {
 				
 				possible=true;
 			}
 		}
 		
+		System.out.println(possible);
 		return possible;
 	}
 	
