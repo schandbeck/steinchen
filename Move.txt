@@ -26,52 +26,79 @@ public class Move {
 			
 			moves=field[board.getX()][board.getY()];
 			
-			field[board.getX()][board.getY()]=0;
 			
-			while(moving==true) {
+			while(moves>0) {
 				
-				if(board.getX()<board.getNextX()) direction=1;
-				if(board.getX()>board.getNextX()) direction=-1;
-				if(board.getX()==board.getNextX() && board.getY()<board.getNextY()) direction=-1;
-				if(board.getX()==board.getNextX() && board.getY()>board.getNextY()) direction=1;
+				board.setLastX(board.getX());
+				board.setLastY(board.getY());
+				moves=field[board.getLastX()][board.getLastY()];
 				
-				for(int i=0; i<moves; i++) {
+				System.out.println(moves);
+				
+			
+				field[board.getX()][board.getY()]=0;
+				
+				while(moving==true) {
 					
-					System.out.print(board.getNextX());
-					System.out.println(board.getNextY());
+					if(board.getX()<board.getNextX()) direction=1;
+					if(board.getX()>board.getNextX()) direction=-1;
+					if(board.getX()==board.getNextX() && board.getY()<board.getNextY()) direction=-1;
+					if(board.getX()==board.getNextX() && board.getY()>board.getNextY()) direction=1;
 					
-					if(board.getNextX() == -1 && board.getNextY() == 0) {
-						board.setNextX(0);
-						board.setNextY(1);
-						direction=1;
+					
+					for(int i=0; i<moves; i++) {
+						
+						System.out.print(board.getNextX());
+						System.out.println(board.getNextY());
+						
+						if(board.getNextX() == -1 && board.getNextY() == 0) {
+							board.setNextX(0);
+							board.setNextY(1);
+							direction=1;
+						}
+						
+						if(board.getNextX() == -1 && board.getNextY() == 1) {
+							board.setNextX(0);
+							board.setNextY(0);
+							direction=1;
+							
+							if(board.getSelX()==board.getX()) {
+								board.setNextY(1);
+								board.setNextX(1);
+							}
+						}
+						
+						if(board.getNextX() == 8 && board.getNextY() == 0) {
+							board.setNextX(7);
+							board.setNextY(1);
+							direction=-1;
+							
+							if(board.getSelX()==board.getX()) {
+								board.setNextY(0);
+								board.setNextX(6);
+							}
+						}
+						
+						if(board.getNextX() == 8 && board.getNextY() == 1) {
+							board.setNextX(7);
+							board.setNextY(0);
+							direction=-1;
+						}
+						
+						System.out.print(board.getNextX());
+						System.out.println(board.getNextY());
+						
+						board.setX(board.getNextX());
+						board.setY(board.getNextY());
+						
+						field[board.getNextX()][board.getNextY()]++;
+						board.setNextX(board.getNextX()+(1*direction));
+						
 					}
-					
-					if(board.getNextX() == -1 && board.getNextY() == 1) {
-						board.setNextX(1);
-						board.setNextY(1);
-						direction=1;
-					}
-					
-					if(board.getNextX() == 8 && board.getNextY() == 0) {
-						board.setNextX(6);
-						board.setNextY(0);
-						direction=-1;
-					}
-					
-					if(board.getNextX() == 8 && board.getNextY() == 1) {
-						board.setNextX(7);
-						board.setNextY(0);
-						direction=-1;
-					}
-					
-					System.out.print(board.getNextX());
-					System.out.println(board.getNextY());
-					
-					field[board.getNextX()][board.getNextY()]++;
-					board.setNextX(board.getNextX()+(1*direction));
+					moving=false;
 				}
 				
-				moving=false;
+				
 				
 			}
 		}
